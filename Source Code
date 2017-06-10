@@ -1,0 +1,63 @@
+# Load in project data and dplyr and tidyr
+> 
+> library(tidyr)
+> library(dplyr)
+>
+> View(adult)
+> 
+> # Add column names to data
+> 
+> ?colnames
+> 
+> # Also convert imported dataset to table dataframe
+> 
+> census_data <- tbl_df(adult)
+> 
+> colnames(census_data) <- c("Age", "Work Class", "FNLWGT", "Education","Education Number", "Marital Status", "Occupation", "Relationship", "Race", "Sex", "Capital Gain", "Capital Loss", "Hours Per Week", "Native Country")
+> 
+> View(census_data)
+> 
+> colnames(census_data) <- c("Age", "Work_Class", "FNLWGT", "Education","Education_Number", "Marital_Status", "Occupation", "Relationship", "Race", "Sex", "Capital_Gain", "Capital_Loss", "Hours_Per_Week", "Native_Country")
+> 
+> # Checking for missing values in my dataset
+> 
+> summary(census_data)
+> 
+> sum(is.na(census_data$age))
+>
+> sum(is.na(census_data$Age))
+>
+> sum(is.na(census_data$Work_Class))
+>
+> 
+> # I noticed that all missing values contain a question mark (?). I will have to convert these values into NA values
+> 
+> census_data[ census_data == "?"] <- NA
+> 
+> # Now that all missing values within the data frame have been converted to an NA value, I can now perform analysis on the missing values.
+> 
+> sum(is.na(census_data$Age))
+>
+> sum(is.na(census_data$Work_Class))
+>
+> sum(is.na(census_data$FNLWGT))
+>
+> sum(is.na(census_data$Education))
+>
+> sum(is.na(census_data$Education_Number))
+>
+> sum(is.na(census_data$Marital_Status))
+>
+> sum(is.na(census_data$Occupation))
+>
+> sum(is.na(census_data$Relationship))
+>
+> sum(is.na(census_data$Race))
+>
+> sum(is.na(census_data$Sex))
+>
+> sum(is.na(census_data$Capital_Gain))
+>
+> sum(is.na(census_data$Capital_Loss))
+>
+> sum(is.na(census_data$Native_Country))
