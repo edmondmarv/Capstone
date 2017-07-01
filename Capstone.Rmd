@@ -1,0 +1,91 @@
+---
+title: "Predicting Income Using U.S. Census Data - Capstone"
+author: "Marvin Edmond"
+date: "June 17, 2017"
+output: html_document
+---
+
+```
+# Set working directory
+setwd("~/School/Springboard/Capstone")
+# Load in project data and dplyr and tidyr
+library(tidyr)
+library(dplyr)
+library(readr)
+```
+
+## Predicting Income from  U.S. Census Bureau Survey
+*****
+##### The aim of my capstone was to predict whether income exceeds $50k using machine learning algorithms. Data from the U.S. Census Bureau survey was collected and analyzed. Train and test sets were used in the process.
+
+## About U.S. Census Data
+*****
+##### The [U.S. Census Bureau](http://www.census.gov) has been headquartered in Suitland, Md. since 1942, and currently employs about 4,285 staff members. The Census Bureau is part of the U.S. Department of Commerce and is overseen by the Economics and Statistics Administration (ESA) within the Department of Commerce. The Economics and Statistics Administration provides high-quality economic analysis and fosters the missions of the U.S. Census Bureau and the Bureau of Economic Analysis.
+
+## Project Purpose
+*****
+##### Wanting to practice my newly acquired machine learning skills, I searched for a project which would be interesting. Census data is always available with an abundance of information but, determining which specific variables to use to predict annual income was a fun challenge. Even though the project was simple, I gives me further insight into the power of machine learning.
+
+## Data Sources
+*****
+##### The Census Bureau did a wonderful job in bringing some order to the available datasets. A plentiful amount of variables were provided for thorough analysis. The data used in my project is from the 1994 Census survey.
+
+##### Data Files:
+
+* [Data Folder](https://archive.ics.uci.edu/ml/machine-learning-databases/adult/)
+* [Data Set Description](https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.names)
+
+##### The Data Folder includes:
+
+* Train and test data sets.
+* Variable names for each column.
+
+## Cleaning The Data
+*****
+##### The data provided by the Census Bureau is semi-unstructured but the data dictionary helped out tremendously in helping to clean the data. A few issues occured while wrangling with the data which were:
+
+* Reassigning easy to read variable names to the data.
+* While checking for missing values, I noticed missing values contained a `?` instead of an `NA` value. 
+* All missing data were later converted to NA values.
+
+```
+adult <- read_csv("~/School/Springboard/Capstone/Data/adult.data",
+col_names = FALSE)
+View(adult)
+
+
+# Add column names to data
+?colnames
+# Also convert imported dataset to table dataframe
+census_data <- tbl_df(adult)
+
+
+colnames(census_data) <- c("Age", "Work_Class", "FNLWGT", "Education","Education_Number", "Marital_Status", "Occupation", "Relationship", "Race", "Sex", "Capital_Gain", "Capital_Loss", "Hours_Per_Week", "Native_Country")
+
+
+# Checking for missing values in my dataset
+summary(census_data)
+sum(is.na(census_data$age))
+sum(is.na(census_data$Age))
+sum(is.na(census_data$Work_Class))
+
+
+# I notice that all missing values contain a question mark (?). I will have to convert these values into NA values
+census_data[ census_data == "?"] <- NA
+
+
+# Now that all missing values within the data frame have been converted to an NA value, I can now perform analysis on the missing values.
+sum(is.na(census_data$Age))
+sum(is.na(census_data$Work_Class))
+sum(is.na(census_data$FNLWGT))
+sum(is.na(census_data$Education))
+sum(is.na(census_data$Education_Number))
+sum(is.na(census_data$Marital_Status))
+sum(is.na(census_data$Occupation))
+sum(is.na(census_data$Relationship))
+sum(is.na(census_data$Race))
+sum(is.na(census_data$Sex))
+sum(is.na(census_data$Capital_Gain))
+sum(is.na(census_data$Capital_Loss))
+sum(is.na(census_data$Native_Country))
+```
