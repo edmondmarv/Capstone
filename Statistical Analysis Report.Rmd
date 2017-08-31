@@ -1,0 +1,142 @@
+---
+title: "Statistical Analysis Report"
+author: "Marvin Edmond"
+date: "August 29, 2017"
+output: html_document
+---
+
+### Initial Set Up
+##### Setting up project for statistical analysis
+
+```
+setwd("~/School/Springboard/Capstone")
+
+# Load in project data and dplyr and tidyr
+
+library(tidyr)
+library(dplyr)
+library(readr)
+adult <- read_csv("~/School/Springboard/Capstone/Data/adult.data",
+col_names = FALSE)
+View(adult)
+
+# Add column names to data
+
+?colnames
+
+# Also convert imported dataset to table dataframe
+
+census_data <- tbl_df(adult)
+
+colnames(census_data) <- c("Age", "Work Class", "FNLWGT", "Education","Education Number", "Marital Status", "Occupation", "Relationship", "Race", "Sex", "Capital Gain", "Capital Loss", "Hours Per Week", "Native Country")
+
+View(census_data)
+
+colnames(census_data) <- c("Age", "Work_Class", "FNLWGT", "Education","Education_Number", "Marital_Status", "Occupation", "Relationship", "Race", "Sex", "Capital_Gain", "Capital_Loss", "Hours_Per_Week", "Native_Country")
+
+# Checking for missing values in my dataset
+
+summary(census_data)
+
+sum(is.na(census_data$age))
+sum(is.na(census_data$Age))
+sum(is.na(census_data$Work_Class))
+
+# I notice that all missing values contain a question mark (?). I will have to convert these values into NA values
+
+census_data[ census_data == "?"] <- NA
+
+# Now that all missing values within the data frame have been converted to an NA value, I can now perform analysis on the missing values.
+
+sum(is.na(census_data$Age))
+sum(is.na(census_data$Work_Class))
+sum(is.na(census_data$FNLWGT))
+sum(is.na(census_data$Education))
+sum(is.na(census_data$Education_Number))
+sum(is.na(census_data$Marital_Status))
+sum(is.na(census_data$Occupation))
+sum(is.na(census_data$Relationship))
+sum(is.na(census_data$Race))
+sum(is.na(census_data$Sex))
+sum(is.na(census_data$Capital_Gain))
+sum(is.na(census_data$Capital_Loss))
+sum(is.na(census_data$Native_Country))
+```
+
+### I. Overview
+##### Data exploration is vital for understanding your data before performing further analysis. Familiarizing yourself with the data visually, quickly helps to determine correlation between variables. Investigating correlation amongst several variables could provide valuable insights pertaining to my capstone involving U.S. Census data.
+
+##### Variables for investigating correlation:
+*	Hours per week vs Education (separated by sex)
+*	Age vs Education
+*	Education vs Gender
+
+### II. Method
+#### A.
+##### Initially, NA values were scattered throughout several columns of the data set. Several inline commands were used to determine most repeated values and fill in those missing values.
+
+```
+# Using a table to provide a list of all possible values in a chosen category and the number of times it was used, is a great way to determine how to fill in any missing values. Also, this method lets you see if there are a duplicate number of values in a chosen category.
+
+sort(table(census_data$Work_Class, useNA="ifany"))
+sort(table(census_data$Occupation, useNA="ifany"))
+sort(table(census_data$Native_Country, useNA="ifany"))
+
+# NA values will now be filled with its corresponding most repeated value within its column.
+
+census_data$Work_Class[is.na(census_data$Work_Class)] <- "Private"
+census_data$Occupation[is.na(census_data$Occupation)] <- "Prof-specialty"
+census_data$Native_Country[is.na(census_data$Native_Country)] <- "United-States"
+
+# Checking the sum of NA values within the entire data set will reveal any remaining missing values
+
+sum(is.na(census_data))
+```
+
+##### The replacement of NA values permitted exploratory data analysis to begin.
+
+```
+library(ggplot2)
+```
+
+#### B.
+##### One of the preliminary investigations for correlations to be performed was the effect of sex and education on the number of hours worked. A bar graph separating the data by sex and color-coded by education was used. The color designation of education provided a better insight into the direct effects of educational attainment.
+
+```
+sex_education_hours_plot <- ggplot(data=census_data, aes(x=Education, y=Hours_Per_Week, fill=Sex)) + geom_bar(color="black", stat="identity", position=position_dodge()) + xlab("Sex") + ylab("Hours Per Week") + ggtitle("Hours Worked Per Week Determined By Sex and Education")
+
+sex_education_hours_plot + theme(panel.background = element_rect(fill='white', colour='black'), axis.text.x=element_text(angle = -90, hjust = 0))
+```
+
+##### The effects of age on educational attainment was meant to provide further insight into its longer term effects. What the data reveals will be compared with other visualizations to uncover implicit correlations and for a more holistic perspective.
+
+```
+age_education_plot <- ggplot(data=census_data, aes(x=Age, fill=Education)) + geom_bar(alpha=1, width=0.9) + xlab("Age") + ylab("Count") + ggtitle("Age and Educational Attainment")
+
+age_education_plot age_education_plot + theme(panel.background = element_rect(fill='white', colour='black'))
+```
+
+##### Last but not least, a plot comparing gender and educational attainment is essential. To be able to find any educational gaps in gender will help in determining more precise factors for possible career outcome, and overall earnings.
+
+```
+gender_education_plot <- ggplot(data=census_data, aes(x=Education, fill=Sex)) + geom_bar() + xlab("Education Attainment") + ylab("Number of Census Participants") + ggtitle("Educational Attainment by Gender")
+
+gender_education_plot + theme(panel.background = element_rect(fill='white', colour='black'), axis.text.x=element_text(angle = -90, hjust = 0))
+```
+
+### III. Results
+#### A. Hours Per Week and Education
+##### The effect of educational attainment on number of hours worked for female laborers are evident. Females whose highest level of education was high school, worked less hours per week compared to their male counterparts. On the other hand, males worked a similar amount of hours per week regardless of education level. This can possibly represent the bigger problem of gender discrimination, with the lack of education exacerbating the issue.
+##### Regardless of a male participants' native country or education level, they continued to dominate the majority of working hours in the United States.
+
+#### B. Age and Education
+##### The decreasing amount of continued education among adults over 35 years of age is not surprising. According to the Department of Education, approximately 70% percent of Americans only hold a high school diploma. The largest proportions of education level are "HS Grad" and "Some College". These two account for most of the data represented in the graph. The data concurs with the research analysis of the DOE.
+##### The importance of higher education was not a stressed a few decades ago. A high school diploma was good enough to find a decent job in many workplaces. In today's world, a college education is now the least amount of schooling needed for entry-level jobs. This puts tremendous pressure on adolescents to undertake advanced learning and outperform their peers. The increased amount of college students among young adults directly reflects this.
+#### C. Gender and Education
+#####Due to the Census data being from a 1994 survey, 23 years ago, the gender gap in education can be shocking at first. In modern times, females now account for close to 50% of higher education recipients from recent survey responses. The lack of advanced education among females directly reflected their opportunities for employment in the workplace. High ranking positions began to fill with women as their educational attainment began to rise.
+##### Men accounted for the majority of higher education and also held higher level positions.
+#### D. Future Analysis
+##### Future analysis should be done to investigate the effects of race as an additional level among all analysis. Gender discrimination is an important issue which affects employment opportunities but the pairing of race should be closely studied to reveal any insightful results. Also, including the participant's primary language would be an interesting factor to examine and how it affects the type of work class or hours worked per week.
+
+
+
