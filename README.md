@@ -1,5 +1,5 @@
 ## Predicting Income Level Using Census Data
-<img src="2000px-United_States_Census_Bureau_Wordmark.svg.png" alt="US Census Bureau" width="1000px" height="1000px">
+<img src="2000px-United_States_Census_Bureau_Wordmark.svg.png" alt="US Census Bureau" width="50%" height="50%">
 
 ### About U.S. Census Data
   The U.S. Census Bureau has been headquartered in Suitland, Md. since 1942, and currently
