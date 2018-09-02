@@ -1,4 +1,4 @@
-<p align="center">## Predicting Income Level Using Census Data</p>
+## <p align="center">Predicting Income Level Using Census Data</p>
 <img src="2000px-United_States_Census_Bureau_Wordmark.svg.png" alt="US Census Bureau" width="50%" height="50%">
 
 ### About U.S. Census Data
