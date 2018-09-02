@@ -1,5 +1,5 @@
 # Predicting Income Level Using Census Data
-![US Census Bureau](/path/to/img.jpg)
+![US Census Bureau](2000px-United_States_Census_Bureau_Wordmark.svg.png)
 
 This is the readme for my capstone project for the Springboard "Foundation of Data Science" workshop. This repository will include all project data including code, rmarkdown and relevant files.
 
