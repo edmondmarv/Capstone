@@ -1,6 +1,6 @@
 ## <p align="center">Predicting Income Level Using Census Data</p>
 <img src="2000px-United_States_Census_Bureau_Wordmark.svg.png" alt="US Census Bureau" width="50%" height="50%">
-
+<br>
 ### About U.S. Census Data
   The U.S. Census Bureau has been headquartered in Suitland, Md. since 1942, and currently
 employs about 4,285 staff members. The Census Bureau is part of the U.S. Department
