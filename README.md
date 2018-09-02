@@ -17,4 +17,4 @@ determining which specific variables to use to predict annual income was a fun c
 though the project was simple, I gives me further insight into the power of machine learning.
 
 
-### I hope you all enjoy!
+Enjoy and thanks for reading!
